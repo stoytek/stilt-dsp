@@ -1,0 +1,13 @@
+INPUTS
+n       -   Bestemmer lengde
+isgn    -   1 for transform, -1 for invers transform
+a       -   Selve signalet som skal transformeres
+ip      -   
+w       -   A cos/sin table. This is used instead of the cos/sin math functions
+            because the math functions eats processing power.
+                http://www.microchip.com/forums/m51290.aspx
+                https://www.dsprelated.com/showthread/comp.dsp/35073-1.php
+FUNCTIONS
+makewt  -   make  
+makect  -   make cosine table
+
