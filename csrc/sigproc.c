@@ -79,13 +79,17 @@ short FFT(short int dir,long m,double *x,double *y)
    return(1);
 }
 
-void zeroPad(double *signal, int sig_length, int nZeros)
+double* zeroPad(double* signal, int* sig_length, int nZeros)
 {
-    printf("%d", sig_length + nZeros);
-    signal = (double *) realloc(signal, (sig_length + nZeros)*sizeof(double));
-    for(int i = sig_length; i < sig_length + nZeros; i++)
+    int length = *sig_length + nZeros;
+    *sig_length = length;
+
+    signal = (double *) realloc(signal, (length)*sizeof(double));
+    for(int i = length; i < length; i++)
     {
         signal[i] = 0.0;
     }
+    return signal;
 }
+
 
