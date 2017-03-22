@@ -3,6 +3,30 @@
 #include <stdlib.h>
 #include <sigproc.h>
 
+double* readIR(char* filename, int nCoeffs)
+{
+    FILE *ir_file = fopen(filename, "r");
+    double* ir = (double*) malloc(nCoeffs*sizeof(double));
+    char* line = NULL;       // Temp line
+    size_t len = 0; 
+    ssize_t read;
+    if(ir_file == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+    for(int n = 0; n < nCoeffs; n++)
+    {
+        if((read = getline(&line, &len, ir_file)) == -1)
+            ir[n] = 0.0;
+        else 
+            ir[n] = strtod(line, NULL);
+    }
+
+    free(line);
+    fclose(ir_file);
+    return ir;
+}
+
 double getdb(double* x, int N)
 {
     /* This is the main sigproc function. 
@@ -18,18 +42,17 @@ double getdb(double* x, int N)
 
     // Second, find and return the dB value (here using RMS!)
     // Replace this with Leq later. 
-    double rms = 0;
+    double db = 0;
     for(int n = 0; n < N; n++)
     {
-        rms += y[n]*y[n];
+        db += y[n]*y[n];
     }
-    rms /= N;
-    rms = sqrt(rms);
-    
-    // TODO: Calculate Leq OR just the dB SPL (decide)
+    db /= N;
+    db = sqrt(db);
+    db = 20*log10(db / 0.00002);
 
     free(y);
-    return 20*log10(rms / 0.00002); // Returns the dB SPL value
+    return db;        
 }
 
 

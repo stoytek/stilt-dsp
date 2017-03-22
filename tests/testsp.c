@@ -60,34 +60,20 @@ void normalize(double* x, int N)
 
 int main(int argc, char *argv[]) 
 {
-
     // Load a soundfile with sndfile:
     SF_INFO soundInfo;
     double* audio = readaudio(argv[1], &soundInfo); 
     int length = soundInfo.frames;
-    int flength = 666;
     
-    // Test the convolution:
-    double* filter = readIR("impulse.txt", flength);
-//    for(int n = 0; n < flength; n++)
-//    {
-//        printf("ir[%d] = %f\n", n, filter[n]);
-//    }
-    double* output = conv(audio, filter, length, flength);
-//     Printing stuff:
-//     for(int n = 0; n < length; n++)
-//     {
-//         printf("n[%d] = %f \n", n, output[n]);
-//     }
-    //normalize(output, length);
+    // Test the convolution and write to file (for comparison by listening):
+    double* filter = impulse;
+    double* output = conv(audio, filter, length, ir_length);
     writeaudio(argv[2], output, length, soundInfo.samplerate);
+    // Test the getdb() function. This should give results comparable to matlab.
+    printf("dB SPL = %f \n", getdb(audio, length));
 
-    //printf("dB SPL = %f\n", getdb(audio, length));
-    //printf("dBA SPL = %f\n", getdb(output, length));
-    
-    // free(filter);
     free(audio);
-    //free(output);
+    free(output);
 	return 0;
 }
 
