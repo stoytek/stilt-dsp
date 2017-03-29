@@ -1,6 +1,14 @@
 #include "sigproc.h"
 
+
+double mic_offset = 3.2498;
 int ir_length = 41;
+/*  The impulse response is based on the following: 
+     A-weighing
+     Relationship between frequency responses between the phone and 
+     Scaled with reference mic, 94 dB
+    The idea is that we have an 
+*/
 double impulse[] = {
     0.255720,
     0.516323,

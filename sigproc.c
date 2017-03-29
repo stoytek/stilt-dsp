@@ -29,7 +29,7 @@ double getdb(double* x, int N)
     // TODO: Calculate Leq OR just the dB SPL (decide)
 
     free(y);
-    return 20*log10(rms / 0.00002); // Returns the dB SPL value
+    return 20*log10(mic_offset * rms / 0.00002); // Returns the dB SPL value
 }
 
 
